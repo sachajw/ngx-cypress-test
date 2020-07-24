@@ -1,5 +1,8 @@
 /// <reference types="cypress" />
 
+const { verify } = require("crypto")
+const { table } = require("console")
+
 describe('Our first suite', () => {
 
 //  it('first test', () => {
@@ -207,8 +210,8 @@ describe('Our first suite', () => {
 //    //check can not uncheck, use click
 //  })
 
-  it.only('lists and dropdowns', () => {
-    cy.visit('http://localhost:4300')
+//  it.only('lists and dropdowns', () => {
+//    cy.visit('http://localhost:4300')
     //1
 //    cy.get('nav nb-select').click()
 //    cy.get('.options-list').contains('Dark').click()
@@ -218,29 +221,64 @@ describe('Our first suite', () => {
 
     //2
     //cypress looping through the elements
-    cy.get('nav nb-select').click().then(dropdown => {
-      cy.wrap(dropdown).click()
-      //each can have up to 3 items
-      cy.get('.options-list nb-option').each((listItem, index) => {
-        //trim removes whitespace
-        const itemText = listItem.text().trim()
-        //json list ogject
-        const colors = {
-          "Light": "rgb(255, 255, 255)",
-          "Dark": "rgb(34, 43, 69)",
-          "Cosmic": "rgb(50, 50, 89)",
-          "Corporate": "rgb(255, 255, 255)"
-        }
+//    cy.get('nav nb-select').click().then(dropdown => {
+//      cy.wrap(dropdown).click()
+//      //each can have up to 3 items
+//      cy.get('.options-list nb-option').each((listItem, index) => {
+//        //trim removes whitespace
+//        const itemText = listItem.text().trim()
+//        //json list ogject
+//        const colors = {
+//          "Light": "rgb(255, 255, 255)",
+//          "Dark": "rgb(34, 43, 69)",
+//          "Cosmic": "rgb(50, 50, 89)",
+//          "Corporate": "rgb(255, 255, 255)"
+//        }
+//
+//        cy.wrap(listItem).click()
+//        cy.wrap(dropdown).should('contain'. itemText)
+//        cy.get('nb-layout-header nav').should('have.css','background-color', colors[itemText])
+//        //if the list is more than 3 the next action will be skipped
+//        if(index < 3){
+//          cy.wrap(dropdown).click()
+//        }
+//
+//      })
+//    })
 
-        cy.wrap(listItem).click()
-        cy.wrap(dropdown).should('contain'. itemText)
-        cy.get('nb-layout-header nav').should('have.css','background-color', colors[itemText])
-        //if the list is more than 3 the next action will be skipped
-        if(index < 3){
-          cy.wrap(dropdown).click()
-        }
+    it.only('Web tables', () => {
+      cy.visit('http://localhost:4300')
+      cy.contains('Tables & Data').click()
+      cy.contains('Smart Table').click()
+
+      cy.get('tbody').contains('tr','Larry').then(tableRow => {
+        cy.wrap(tableRow).find('.nb-edit').click()
+        cy.wrap(tableRow).find('[placeholder="Age"]').clear().type('25')
+        cy.wrap(tableRow).find('.nb-checkmark')
+        cy.wrap(tableRow).find('td').eq(6).should('contain','25')
+      })
+
+      //2
+      cy.get('thead').find('.nb-plus').click()
+      cy.get('thead').find('tr').eq(2).then(tableRow => {
+        cy.wrap(tableRow).find('[placeholder="First Name"]').type('Artem')
+        cy.wrap(tableRow).find('[placeholder="Last Name"]').type('Bondar')
+        cy.wrap(tableRow).find('nb-checkmark').click()
+      })
+      cy.get('tbody tr').first().find('td').then(tableColumns => {
+        cy.wrap(tableColumns).eq(2).should('contain','Artem')
+        cy.wrap(tableColumns).eq(3).should('contain','Bondar')
+      })
+
+      //3
+      cy.get('thead [placeholder="Age"]').type('20')
+      cy.get('tabe tr').each(tableRow => {
+        cy.wrap(tableRow).first
 
       })
+
+
+
     })
 
   })
