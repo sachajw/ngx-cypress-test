@@ -122,36 +122,39 @@ describe('Our first suite', () => {
 
   })
 
-  it('invoke command', () => {
-    cy.visit('http://localhost:4300')
-    cy.contains('Forms').click()
-    cy.contains('Form Layouts').click()
+//  it('invoke command', () => {
+//    cy.visit('http://localhost:4300')
+//    cy.contains('Forms').click()
+//    cy.contains('Form Layouts').click()
+//
+//    //1
+//    cy.get('[for="exampleInputEmail1"]').should('contain','Email address')
+//
+//    //2 jquery text method
+//    cy.get('[for="exampleInputEmail1"]').then(label => {
+//      expect(label.text()).to.equal('Email address')
+//
+//    //3 cypress invoke method
+//    cy.get('[for="exampleInputEmail1"]').invoke('text').then(text => {
+//      expect(text).to.equal('Email address')
+//
+//    //4 checkbox
+//    cy.contains('nb-card','Basic form')
+//    .find('nb-checkbox')
+//    .click()
+//    .find('.custom-checkbox')
+//    .invoke('attr','class')
+//    //one way to make an assertion is to use the cypress method of should
+//    //.should('contain','checked')
+//    //the other way to make an assertion is to extract the result of the invoke function as a parameter for that function
+//    //then use the chai assertion to make the same verification
+//    .then(classValue => {
+//      expect(classValue).to.contain('checked')
+//    })
+//
+//  })
 
-    //1
-    cy.get('[for="exampleInputEmail1"]').should('contain','Email address')
-
-    //2 jquery text method
-    cy.get('[for="exampleInputEmail1"]').then(label => {
-      expect(label.text()).to.equal('Email address')
-
-    //3 cypress invoke method
-    cy.get('[for="exampleInputEmail1"]').invoke('text').then(text => {
-      expect(text).to.equal('Email address')
-
-    //4 checkbox
-    cy.contains('nb-card','Basic form')
-    .find('nb-checkbox')
-    .click()
-    .find('.custom-checkbox')
-    .invoke('attr','class')
-    //one way to make an assertion is to use the cypress method of should
-    //.should('contain','checked')
-    //the other way to make an assertion is to extract the result of the invoke function as a parameter for that function
-    //then use the chai assertion to make the same verification
-    .then(classValue => {
-      expect(classValue).to.contain('checked')
-
-    it.only('assert property', () => {
+  it.only('assert property', () => {
       cy.visit('http://localhost:4300')
       cy.contains('Forms').click()
       cy.contains('Datepicker').click()
@@ -160,21 +163,8 @@ describe('Our first suite', () => {
         cy.wrap(input).click()
         cy.get('nb-calendar-day-picker').contains('17').click()
         //using the property tab in the chrome browser to
-        cy.wrap(input).invoke('prop','value').should('contain','Dec 17, 2019')
+        cy.wrap(input).invoke('prop','value').should('contain','Jul 17, 2020')
       })
 
     })
-
-    })
-
-
-    })
-
-    })
-
-
-
-  }
-
-})
 
