@@ -144,7 +144,28 @@ describe('Our first suite', () => {
     .click()
     .find('.custom-checkbox')
     .invoke('attr','class')
-    .should('contain','checked')
+    //one way to make an assertion is to use the cypress method of should
+    //.should('contain','checked')
+    //the other way to make an assertion is to extract the result of the invoke function as a parameter for that function
+    //then use the chai assertion to make the same verification
+    .then(classValue => {
+      expect(classValue).to.contain('checked')
+
+    it.only('assert property', () => {
+      cy.visit('http://localhost:4300')
+      cy.contains('Forms').click()
+      cy.contains('Datepicker').click()
+
+      cy.contains('nb-card','Common Datepicker').find('input').then(input => {
+        cy.wrap(input).click()
+        cy.get('nb-calendar-day-picker').contains('17').click()
+        //using the property tab in the chrome browser to
+        cy.wrap(input).invoke('prop','value').should('contain','Dec 17, 2019')
+      })
+
+    })
+
+    })
 
 
     })
