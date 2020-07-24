@@ -66,11 +66,11 @@ describe('Our first suite', () => {
 //
 //  })
 
-  it('then and wrap methods', () => {
-
-    cy.visit('http://localhost:4300')
-    cy.contains('Forms').click()
-    cy.contains('Form Layouts').click()
+//  it('then and wrap methods', () => {
+//
+//    cy.visit('http://localhost:4300')
+//    cy.contains('Forms').click()
+//    cy.contains('Form Layouts').click()
 
     //lots of repetition which can be converted to a variable to be called
 //    cy.contains('nb-card','Using the Grid')
@@ -101,26 +101,59 @@ describe('Our first suite', () => {
     //Difference between Cypress jquery and jquery format
     //Jquery chai
     //saving contains results into firstform
-    cy.contains('nb-card','Using the Grid').then(firstForm => {
-      //variables - jquery
-      const emailLabelFirst = firstForm.find('[for="inputEmail1"]').text()
-      const passwordLabelFirst = firstForm.find('[for="inputPassword2"]').text()
-      //chai assertions
-      expect(emailLabelFirst).to.equal('Email')
-      expect(passwordLabelFirst).to.equal('Password')
+//    cy.contains('nb-card','Using the Grid').then(firstForm => {
+//      //variables - jquery
+//      const emailLabelFirst = firstForm.find('[for="inputEmail1"]').text()
+//      const passwordLabelFirst = firstForm.find('[for="inputPassword2"]').text()
+//      //chai assertions
+//      expect(emailLabelFirst).to.equal('Email')
+//      expect(passwordLabelFirst).to.equal('Password')
+//
+//      cy.contains('nb-card','Basic form').then(secondForm => {
+//        const passwordSecondText = secondForm.find('[for="exampleInputPassword1"]').text()
+//        expect(passwordLabelFirst).to.equal(passwordSecondText)
+//
+//        //convert jquery object back to cypress command methods
+//        cy.wrap(secondForm).find('[for="exampleInputPassword1"]').should('contain','Password')
+//
+//      })
+//
+//    })
 
-      cy.contains('nb-card','Basic form').then(secondForm => {
-        const passwordSecondText = secondForm.find('[for="exampleInputPassword1"]').text()
-        expect(passwordLabelFirst).to.equal(passwordSecondText)
+  })
 
-        //convert jquery object back to cypress command methods
-        cy.wrap(secondForm).find('[for="exampleInputPassword1"]').should('contain','Password')
+  it('invoke command', () => {
+    cy.visit('http://localhost:4300')
+    cy.contains('Forms').click()
+    cy.contains('Form Layouts').click()
 
-      })
+    //1
+    cy.get('[for="exampleInputEmail1"]').should('contain','Email address')
+
+    //2 jquery text method
+    cy.get('[for="exampleInputEmail1"]').then(label => {
+      expect(label.text()).to.equal('Email address')
+
+    //3 cypress invoke method
+    cy.get('[for="exampleInputEmail1"]').invoke('text').then(text => {
+      expect(text).to.equal('Email address')
+
+    //4 checkbox
+    cy.contains('nb-card','Basic form')
+    .find('nb-checkbox')
+    .click()
+    .find('.custom-checkbox')
+    .invoke('attr','class')
+    .should('contain','checked')
+
 
     })
 
-  })
+    })
+
+
+
+  }
 
 })
 
