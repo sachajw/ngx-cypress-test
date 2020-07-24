@@ -154,17 +154,68 @@ describe('Our first suite', () => {
 //
 //  })
 
-  it.only('assert property', () => {
-      cy.visit('http://localhost:4300')
-      cy.contains('Forms').click()
-      cy.contains('Datepicker').click()
+//  it.only('assert property', () => {
+//      cy.visit('http://localhost:4300')
+//      cy.contains('Forms').click()
+//      cy.contains('Datepicker').click()
+//
+//      cy.contains('nb-card','Common Datepicker').find('input').then(input => {
+//        cy.wrap(input).click()
+//        cy.get('nb-calendar-day-picker').contains('17').click()
+//        //using the property tab in the chrome browser to
+//        cy.wrap(input).invoke('prop','value').should('contain','Jul 17, 2020')
+//      })
+//
+//    })
 
-      cy.contains('nb-card','Common Datepicker').find('input').then(input => {
-        cy.wrap(input).click()
-        cy.get('nb-calendar-day-picker').contains('17').click()
-        //using the property tab in the chrome browser to
-        cy.wrap(input).invoke('prop','value').should('contain','Jul 17, 2020')
-      })
+  it.only('radio button', () => {
+    cy.visit('http://localhost:4300')
+    cy.contains('Forms').click()
+    cy.contains('Form Layouts').click()
 
+    cy.contains('nb-card','Using the Grid').find('[type="radio"]').then(radioButtons => {
+      cy.wrap(radioButtons)
+        .first()
+        .check({force:true})
+        .should('be.checked')
+
+      cy.wrap(radioButtons)
+        //element with index 1
+        .eq(1)
+        .check({force:true})
+
+      cy.wrap(radioButtons)
+        .first()
+        .should('not.be.checked')
+
+      cy.wrap(radioButtons)
+      .eq(2)
+      .should('be.disabled')
     })
+
+  })
+
+  it.only('check boxes', () => {
+    cy.visit('http://localhost:4300')
+    cy.contains('Modal & Overlays').click()
+    cy.contains('Toastr').click()
+
+    cy.get('[type="checkbox"]').check({force:true})
+    cy.get('[type="checkbox"]').eq(0).click({force:true})
+    cy.get('[type="checkbox"]').eq(0).check({force:true})
+    //check only for checkboxes and radio buttons
+    //check can not uncheck, use click
+  })
+
+  it.only('lists and dropdowns', () => {
+    cy.visit('http://localhost:4300')
+
+    cy.get('nav nb-select').click()
+    cy.get('.options-list').contains('Dark').click()
+
+
+
+
+
+
 
