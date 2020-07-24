@@ -168,50 +168,83 @@ describe('Our first suite', () => {
 //
 //    })
 
-  it.only('radio button', () => {
+//  it.only('radio button', () => {
+//    cy.visit('http://localhost:4300')
+//    cy.contains('Forms').click()
+//    cy.contains('Form Layouts').click()
+//
+//    cy.contains('nb-card','Using the Grid').find('[type="radio"]').then(radioButtons => {
+//      cy.wrap(radioButtons)
+//        .first()
+//        .check({force:true})
+//        .should('be.checked')
+//
+//      cy.wrap(radioButtons)
+//        //element with index 1
+//        .eq(1)
+//        .check({force:true})
+//
+//      cy.wrap(radioButtons)
+//        .first()
+//        .should('not.be.checked')
+//
+//      cy.wrap(radioButtons)
+//      .eq(2)
+//      .should('be.disabled')
+//    })
+//
+//  })
+
+//  it.only('check boxes', () => {
+//    cy.visit('http://localhost:4300')
+//    cy.contains('Modal & Overlays').click()
+//    cy.contains('Toastr').click()
+//
+//    cy.get('[type="checkbox"]').check({force:true})
+//    cy.get('[type="checkbox"]').eq(0).click({force:true})
+//    cy.get('[type="checkbox"]').eq(0).check({force:true})
+//    //check only for checkboxes and radio buttons
+//    //check can not uncheck, use click
+//  })
+
+  it.only('lists and dropdowns', () => {
     cy.visit('http://localhost:4300')
-    cy.contains('Forms').click()
-    cy.contains('Form Layouts').click()
+    //1
+//    cy.get('nav nb-select').click()
+//    cy.get('.options-list').contains('Dark').click()
+    //colour change covert hex to rgb for cypress
+//    cy.get('nav nb-select').click().should('contain','Dark')
+//    cy.get('nb-layout-header nav').should('have.css','background-color','rgb(34, 43, 69)')
 
-    cy.contains('nb-card','Using the Grid').find('[type="radio"]').then(radioButtons => {
-      cy.wrap(radioButtons)
-        .first()
-        .check({force:true})
-        .should('be.checked')
+    //2
+    //cypress looping through the elements
+    cy.get('nav nb-select').click().then(dropdown => {
+      cy.wrap(dropdown).click()
+      //each can have up to 3 items
+      cy.get('.options-list nb-option').each((listItem, index) => {
+        //trim removes whitespace
+        const itemText = listItem.text().trim()
+        //json list ogject
+        const colors = {
+          "Light": "rgb(255, 255, 255)",
+          "Dark": "rgb(34, 43, 69)",
+          "Cosmic": "rgb(50, 50, 89)",
+          "Corporate": "rgb(255, 255, 255)"
+        }
 
-      cy.wrap(radioButtons)
-        //element with index 1
-        .eq(1)
-        .check({force:true})
+        cy.wrap(listItem).click()
+        cy.wrap(dropdown).should('contain'. itemText)
+        cy.get('nb-layout-header nav').should('have.css','background-color', colors[itemText])
+        //if the list is more than 3 the next action will be skipped
+        if(index < 3){
+          cy.wrap(dropdown).click()
+        }
 
-      cy.wrap(radioButtons)
-        .first()
-        .should('not.be.checked')
-
-      cy.wrap(radioButtons)
-      .eq(2)
-      .should('be.disabled')
+      })
     })
 
   })
 
-  it.only('check boxes', () => {
-    cy.visit('http://localhost:4300')
-    cy.contains('Modal & Overlays').click()
-    cy.contains('Toastr').click()
-
-    cy.get('[type="checkbox"]').check({force:true})
-    cy.get('[type="checkbox"]').eq(0).click({force:true})
-    cy.get('[type="checkbox"]').eq(0).check({force:true})
-    //check only for checkboxes and radio buttons
-    //check can not uncheck, use click
-  })
-
-  it.only('lists and dropdowns', () => {
-    cy.visit('http://localhost:4300')
-
-    cy.get('nav nb-select').click()
-    cy.get('.options-list').contains('Dark').click()
 
 
 
