@@ -14,16 +14,41 @@ describe('Date Picker', () => {
   it('invoke command', () => {
   })
 
-  it('assert property', () => {
+  it.only('assert property', () => {
+
+      function selectDayFromCurrent(day){
+        //get date object - current system date and time
+            let date = new Date()
+            date.setDate(date.getDate() + day)
+            let futureDay = date.getDate()
+            let futureMonth = date.toLocaleString('default', {month: 'short'})
+            let dateAssert = futureMonth+' '+futureDay+', '+date.getFullYear()
+            cy.get('nb-calendar-navigation').invoke('attr', 'ng-reflect-date').then(dateAttribute => {
+                if(!dateAttribute.includes(futureMonth)){
+                    cy.get('[data-name="chevron-right"]').click()
+                    //call the function again until the right date is found
+                    selectDayFromCurrent(day)
+                    //cy.get('nb-calendar-day-picker [class="day-cell ng-star-inserted"]').contains(futureDay).click()
+                } else {
+                    cy.get('nb-calendar-day-picker [class="day-cell ng-star-inserted"]').contains(futureDay).click()
+                }
+            })
+            return dateAssert
+        }
+
         cy.visit('http://localhost:4300')
         cy.contains('Forms').click()
         cy.contains('Datepicker').click()
 
-        cy.contains('nb-card','Common Datepicker').find('input').then(input => {
+        cy.contains('nb-card','Common Datepicker').find('input').then( input => {
+
           cy.wrap(input).click()
-          cy.get('nb-calendar-day-picker').contains('17').click()
-          //using the property tab in the chrome browser to
-          cy.wrap(input).invoke('prop','value').should('contain','Jul 17, 2020')
+          let dateAssert = selectDayFromCurrent()
+          cy.wrap(input).invoke('prop','value').should('contain',dateAssert)
+
+          //using the property tab in the chrome browser
+          //hardcoded example
+          //cy.get('nb-calendar-day-picker').contains('17').click()
         })
 
   })
