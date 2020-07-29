@@ -1,8 +1,5 @@
 /// <reference types="cypress" />
 
-const { verify } = require("crypto")
-const { table } = require("console")
-
 describe('Our first suite', () => {
 
   it('first test', () => {
