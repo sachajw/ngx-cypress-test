@@ -25,5 +25,5 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 Cypress.Commands.add('openHomePage', () => {
-  cy.visit('http://localhost:4300')
+  cy.visit('/')
 })
