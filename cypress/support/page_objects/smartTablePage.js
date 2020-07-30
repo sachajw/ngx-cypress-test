@@ -28,7 +28,7 @@ export class SmartTable{
     cy.on('window:confirm', stub)
     cy.get('tbody tr').eq(index).find('.nb-trash').click().then(() => {
       expect(stub.getCall(0)).to.be.calledWith('Are you sure you want to delete?')
-   })
+     })
   }
 }
 }

@@ -39,10 +39,7 @@ export class DatepickerPage{
       cy.wrap(input).invoke('prop','value').should('contain',finalDate)
       cy.wrap(input).should('have.value', finalDate)
     })
-}
-
-
-
+  }
 }
 
 export const onDatePickerPage = new DatepickerPage()

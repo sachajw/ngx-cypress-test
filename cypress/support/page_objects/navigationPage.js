@@ -37,7 +37,6 @@ export class NavigationPage{
     selectGroupmenuItem('Modal & Overlays')
     cy.contains('Tooltip').click()
   }
-
 }
 
 export const navigateTo = new NavigationPage()

@@ -8,7 +8,7 @@ import {onSmartTablePage} from "../support/page_objects/smartTablePage"
 describe('page objects', () => {
 
   beforeEach('open application', () => {
-      cy.visit('http://localhost:4300')
+      cy.openHomePage()
   })
 
   it('verify navigation across the pages', () => {
@@ -19,7 +19,7 @@ describe('page objects', () => {
     navigateTo.toasterPage()
   })
 
-  it('should submit Inline and Basic forma nd selct tomorrow date in the calendar', () => {
+  it('should submit inline and basic form and select tomorrows date in the calendar', () => {
     navigateTo.formLayoutsPage()
     onFormLayoutsPage.submitInlineFormWithNameAndEmail('Artem','test@test.com')
     onFormLayoutsPage.submitInlineFormWithEmailAndPassword('test@test.com','password')
